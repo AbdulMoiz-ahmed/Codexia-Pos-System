@@ -1,0 +1,11 @@
+--- TESTING USER CHECKNG (Enterprise) ---
+
+🔐 Attempting login for 'checkng'...
+✅ Login Successful
+   User: checkng
+   Tenant: None
+📡 Fetching Subscription...
+✅ Subscription Data:
+   Package: Enterprise
+   Company: checkng
+   Modules: ['pos', 'inventory', 'sales', 'purchase', 'accounting', 'hr', 'manufacturing', 'assets']

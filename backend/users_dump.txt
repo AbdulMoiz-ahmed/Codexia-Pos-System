@@ -1,0 +1,14 @@
+
+👥 USERS:
+User: superadmin | Email: admin@possaas.com | TenantID: None | Role: SuperAdmin
+User: checkng | Email: raay@gmail.com | TenantID: 695ad5c49f48ccfa2f2cb0ac | Role: User
+User: tenet | Email: abdulmoiz76655@gmail.com | TenantID: 695adb92fa90afc2ad1c1449 | Role: User
+
+🏢 TENANTS:
+Tenant: 695ad54ff7bb13b37bcb4d7e | Company: checkng | Pkg: Enterprise
+Tenant: 695ad5c49f48ccfa2f2cb0ac | Company: checkng | Pkg: Enterprise
+Tenant: 695adb92fa90afc2ad1c1449 | Company: tenet | Pkg: Professional
+
+🔍 MAPPING CHECK:
+User 'checkng' belongs to Tenant 'checkng' (695ad5c49f48ccfa2f2cb0ac)
+User 'tenet' belongs to Tenant 'tenet' (695adb92fa90afc2ad1c1449)
