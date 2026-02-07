@@ -94,6 +94,7 @@ def create_product():
             'barcode': data.get('barcode', ''),
             'description': data.get('description', ''),
             'unit': data.get('unit', 'pcs'),
+            'image': data.get('image', ''),  # Product image URL
             'is_active': True,
             'created_at': get_current_utc_time(),
             'updated_at': get_current_utc_time()
@@ -143,7 +144,7 @@ def update_product(product_id):
             'updated_at': get_current_utc_time()
         }
         
-        fields = ['name', 'sku', 'category', 'category_id', 'price', 'cost', 'stock', 'min_stock', 'barcode', 'description', 'unit', 'is_active']
+        fields = ['name', 'sku', 'category', 'category_id', 'price', 'cost', 'stock', 'min_stock', 'barcode', 'description', 'unit', 'is_active', 'image']
         for field in fields:
             if field in data:
                 update_data[field] = data[field]

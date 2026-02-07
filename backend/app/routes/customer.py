@@ -260,7 +260,7 @@ def get_subscription():
         
         # Check if demo user - return all modules
         if user.get('is_demo') or (hasattr(g, 'is_demo') and g.is_demo):
-            # Demo users get ALL modules
+            # Demo users get all business modules
             all_modules = ['pos', 'inventory', 'sales', 'purchase', 'hr', 'accounting', 'manufacturing', 'assets']
             return jsonify({
                 'package': 'Demo Package',
@@ -288,12 +288,15 @@ def get_subscription():
         
         tenant_data = serialize_doc(tenant)
         
+        # Get enabled modules from tenant's package
+        enabled_modules = tenant_data.get('enabled_modules', [])
+        
         return jsonify({
             'package': tenant_data.get('license', {}).get('package_name', 'N/A'),
             'status': tenant_data.get('license', {}).get('status', 'N/A'),
             'start_date': tenant_data.get('license', {}).get('start_date'),
             'expiry_date': tenant_data.get('license', {}).get('expiry_date'),
-            'enabled_modules': tenant_data.get('enabled_modules', []),
+            'enabled_modules': enabled_modules,
             'limits': tenant_data.get('limits', {}),
             'company_name': tenant_data.get('company_name'),
             'email': tenant_data.get('email')

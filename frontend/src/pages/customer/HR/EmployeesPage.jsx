@@ -4,7 +4,7 @@ import { useToast } from '../../../components/Toast'
 import { Badge } from '../../../components/UIComponents'
 
 const ROLES = [
-    { id: 'admin', name: 'Admin', description: 'Full access to all modules' },
+    { id: 'admin', name: 'Admin', description: 'Full access to all modules + Activity Logs & Settings' },
     { id: 'sales_manager', name: 'Sales Manager', modules: ['pos', 'sales', 'inventory'] },
     { id: 'inventory_manager', name: 'Inventory Manager', modules: ['inventory', 'purchase'] },
     { id: 'hr_manager', name: 'HR Manager', modules: ['hr'] },
@@ -13,6 +13,8 @@ const ROLES = [
     { id: 'custom', name: 'Custom', description: 'Select specific permissions' }
 ]
 
+// Available modules for custom role assignment
+// Note: Activity Logs & Settings are admin-only features, not modules
 const ALL_MODULES = [
     { id: 'pos', name: 'Point of Sale', description: 'Process sales transactions' },
     { id: 'inventory', name: 'Inventory', description: 'Manage products & stock' },
@@ -458,8 +460,8 @@ export default function EmployeesPage() {
                                             <label
                                                 key={module.id}
                                                 className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition ${userFormData.allowed_modules.includes(module.id)
-                                                        ? 'bg-primary-50 border-primary-300'
-                                                        : 'bg-white border-gray-200 hover:bg-gray-50'
+                                                    ? 'bg-primary-50 border-primary-300'
+                                                    : 'bg-white border-gray-200 hover:bg-gray-50'
                                                     }`}
                                             >
                                                 <input
@@ -475,6 +477,10 @@ export default function EmployeesPage() {
                                             </label>
                                         ))}
                                     </div>
+                                    {/* Note about admin-only features */}
+                                    <p className="text-xs text-gray-500 mt-3 italic">
+                                        Note: Activity Logs & Settings are admin-only features.
+                                    </p>
                                 </div>
                             )}
 

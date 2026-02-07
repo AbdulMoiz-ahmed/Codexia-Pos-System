@@ -123,8 +123,8 @@ export default function InventoryManagement() {
                 <button
                     onClick={() => setActiveTab('products')}
                     className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'products'
-                            ? 'bg-primary-600 text-white'
-                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-white text-gray-600 hover:bg-gray-50'
                         }`}
                 >
                     Products
@@ -132,8 +132,8 @@ export default function InventoryManagement() {
                 <button
                     onClick={() => setActiveTab('categories')}
                     className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'categories'
-                            ? 'bg-primary-600 text-white'
-                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-white text-gray-600 hover:bg-gray-50'
                         }`}
                 >
                     Categories
@@ -227,10 +227,10 @@ export default function InventoryManagement() {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className={`px-2 py-1 text-xs font-semibold rounded-full ${product.stock <= 0
-                                                        ? 'bg-red-100 text-red-800'
-                                                        : product.stock <= (product.min_stock || 10)
-                                                            ? 'bg-yellow-100 text-yellow-800'
-                                                            : 'bg-green-100 text-green-800'
+                                                    ? 'bg-red-100 text-red-800'
+                                                    : product.stock <= (product.min_stock || 10)
+                                                        ? 'bg-yellow-100 text-yellow-800'
+                                                        : 'bg-green-100 text-green-800'
                                                     }`}>
                                                     {product.stock}
                                                 </span>
@@ -421,8 +421,12 @@ function ProductModal({ product, categories, onClose, onSave }) {
         min_stock: product?.min_stock || 10,
         barcode: product?.barcode || '',
         description: product?.description || '',
-        unit: product?.unit || 'pcs'
+        unit: product?.unit || 'pcs',
+        image: product?.image || ''
     })
+    const [imageFile, setImageFile] = useState(null)
+    const [imagePreview, setImagePreview] = useState(product?.image || '')
+    const [uploading, setUploading] = useState(false)
 
     const handleCategoryChange = (categoryId) => {
         const category = categories.find(c => c._id === categoryId)
@@ -433,9 +437,64 @@ function ProductModal({ product, categories, onClose, onSave }) {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            // Validate file type
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp']
+            if (!allowedTypes.includes(file.type)) {
+                alert('Invalid file type. Please upload PNG, JPG, GIF, or WebP images.')
+                return
+            }
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File too large. Maximum size is 5MB.')
+                return
+            }
+            setImageFile(file)
+            setImagePreview(URL.createObjectURL(file))
+        }
+    }
+
+    const removeImage = () => {
+        setImageFile(null)
+        setImagePreview('')
+        setFormData({ ...formData, image: '' })
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        onSave({ ...product, ...formData })
+        setUploading(true)
+
+        let imageUrl = formData.image
+
+        // Upload image if a new file was selected
+        if (imageFile) {
+            try {
+                const uploadData = new FormData()
+                uploadData.append('image', imageFile)
+
+                const response = await fetch('http://localhost:5000/uploads/product-image', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                    },
+                    body: uploadData
+                })
+
+                if (response.ok) {
+                    const result = await response.json()
+                    imageUrl = result.image_url
+                } else {
+                    console.error('Failed to upload image')
+                }
+            } catch (error) {
+                console.error('Image upload error:', error)
+            }
+        }
+
+        setUploading(false)
+        onSave({ ...product, ...formData, image: imageUrl })
     }
 
     return (
@@ -453,6 +512,56 @@ function ProductModal({ product, categories, onClose, onSave }) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Product Image */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
+                        <div className="flex items-start gap-4">
+                            <div className="relative">
+                                {imagePreview ? (
+                                    <div className="relative">
+                                        <img
+                                            src={imagePreview.startsWith('blob:') ? imagePreview : `http://localhost:5000${imagePreview}`}
+                                            alt="Product preview"
+                                            className="w-32 h-32 object-cover rounded-lg border border-gray-200"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={removeImage}
+                                            className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="w-32 h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                                        <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex-1">
+                                <input
+                                    type="file"
+                                    accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                    id="product-image-input"
+                                />
+                                <label
+                                    htmlFor="product-image-input"
+                                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+                                >
+                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                    </svg>
+                                    Choose Image
+                                </label>
+                                <p className="text-xs text-gray-500 mt-2">PNG, JPG, GIF, WebP up to 5MB</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
@@ -559,7 +668,9 @@ function ProductModal({ product, categories, onClose, onSave }) {
 
                     <div className="flex justify-end gap-3 pt-4">
                         <button type="button" onClick={onClose} className="btn-secondary">Cancel</button>
-                        <button type="submit" className="btn-primary">Save Product</button>
+                        <button type="submit" className="btn-primary" disabled={uploading}>
+                            {uploading ? 'Uploading...' : 'Save Product'}
+                        </button>
                     </div>
                 </form>
             </div>

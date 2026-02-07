@@ -17,6 +17,8 @@ from app.routes.demo import demo_bp
 from app.routes.roles import roles_bp
 from app.routes.activity import activity_bp
 from app.routes.settings import settings_bp
+from app.routes.users import users_bp
+from app.routes.upload import upload_bp
 
 
 def register_blueprints(app):
@@ -37,5 +39,6 @@ def register_blueprints(app):
     app.register_blueprint(roles_bp, url_prefix='/api/roles')
     app.register_blueprint(activity_bp, url_prefix='/api/activity')
     app.register_blueprint(settings_bp, url_prefix='/api/settings')
-
+    app.register_blueprint(users_bp, url_prefix='/api/users')
+    app.register_blueprint(upload_bp, url_prefix='/uploads')
 

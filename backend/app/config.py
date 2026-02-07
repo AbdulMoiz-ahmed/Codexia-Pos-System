@@ -37,6 +37,11 @@ class Config:
     APP_URL = os.getenv('APP_URL', 'http://localhost:3000')
     API_URL = os.getenv('API_URL', 'http://localhost:5000')
     
+    # File Uploads
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'uploads')
+    MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # 5MB max file size
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+    
     # CORS
     CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:3000,http://localhost:5173').split(',')
 

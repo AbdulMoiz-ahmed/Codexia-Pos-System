@@ -163,14 +163,16 @@ function PackageModal({ package: pkg, onClose, onSave }) {
             monthly_transactions: pkg?.limits?.monthly_transactions || 1000
         },
         modules: pkg?.modules || [
-            { name: 'pos', enabled: true },
-            { name: 'inventory', enabled: true },
-            { name: 'sales', enabled: false },
-            { name: 'purchase', enabled: false },
-            { name: 'accounting', enabled: false },
-            { name: 'hr', enabled: false },
-            { name: 'manufacturing', enabled: false },
-            { name: 'assets', enabled: false }
+            { name: 'pos', enabled: true, isBase: false },
+            { name: 'inventory', enabled: true, isBase: false },
+            { name: 'sales', enabled: false, isBase: false },
+            { name: 'purchase', enabled: false, isBase: false },
+            { name: 'accounting', enabled: false, isBase: false },
+            { name: 'hr', enabled: false, isBase: false },
+            { name: 'manufacturing', enabled: false, isBase: false },
+            { name: 'assets', enabled: false, isBase: false },
+            { name: 'activity_logs', enabled: true, isBase: true },
+            { name: 'settings', enabled: true, isBase: true }
         ]
     })
     const [loading, setLoading] = useState(false)
@@ -397,16 +399,24 @@ function PackageModal({ package: pkg, onClose, onSave }) {
                         {/* Modules */}
                         <div>
                             <h4 className="text-lg font-semibold text-gray-900 mb-3">Enabled Modules</h4>
+                            <p className="text-sm text-gray-500 mb-3">Base modules (Activity Logs, Settings) are included in all packages.</p>
                             <div className="grid md:grid-cols-4 gap-3">
                                 {formData.modules.map((module) => (
-                                    <label key={module.name} className="flex items-center space-x-2 cursor-pointer">
+                                    <label
+                                        key={module.name}
+                                        className={`flex items-center space-x-2 ${module.isBase ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
+                                    >
                                         <input
                                             type="checkbox"
                                             checked={module.enabled}
-                                            onChange={() => handleModuleToggle(module.name)}
-                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                            onChange={() => !module.isBase && handleModuleToggle(module.name)}
+                                            disabled={module.isBase}
+                                            className={`h-4 w-4 focus:ring-primary-500 border-gray-300 rounded ${module.isBase ? 'text-green-600' : 'text-primary-600'}`}
                                         />
-                                        <span className="text-sm text-gray-700 capitalize">{module.name}</span>
+                                        <span className={`text-sm capitalize ${module.isBase ? 'text-green-700 font-medium' : 'text-gray-700'}`}>
+                                            {module.name.replace('_', ' ')}
+                                            {module.isBase && <span className="text-xs ml-1">(Base)</span>}
+                                        </span>
                                     </label>
                                 ))}
                             </div>

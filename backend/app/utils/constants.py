@@ -18,6 +18,7 @@ MODULE_HR = 'hr'
 MODULE_MANUFACTURING = 'manufacturing'
 MODULE_ASSETS = 'assets'
 
+# All available modules (for package/role configuration)
 ALL_MODULES = [
     MODULE_POS,
     MODULE_INVENTORY,
@@ -28,6 +29,8 @@ ALL_MODULES = [
     MODULE_MANUFACTURING,
     MODULE_ASSETS
 ]
+
+# Note: Activity Logs and Settings are admin-only features, not modules
 
 # User Roles
 ROLE_SUPER_ADMIN = 'super_admin'

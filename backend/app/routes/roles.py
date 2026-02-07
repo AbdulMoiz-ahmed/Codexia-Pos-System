@@ -6,14 +6,16 @@ from app.middleware.auth import tenant_required
 
 roles_bp = Blueprint('roles', __name__)
 
-# Available modules in the system
+# Available modules in the system (for package/role configuration)
 ALL_MODULES = ['pos', 'inventory', 'sales', 'purchase', 'hr', 'accounting', 'manufacturing', 'assets']
+
+# Note: Activity Logs and Settings are admin-only UI features, not RBAC modules
 
 # Role definitions with their allowed modules
 ROLE_DEFINITIONS = {
     'admin': {
         'name': 'Admin',
-        'description': 'Full access to all modules',
+        'description': 'Full access to all modules + Activity Logs & Settings',
         'modules': ALL_MODULES
     },
     'sales_manager': {
@@ -47,6 +49,8 @@ ROLE_DEFINITIONS = {
         'modules': []  # Will be set per-user
     }
 }
+
+
 
 
 def get_role_modules(role, custom_modules=None):
@@ -94,3 +98,4 @@ def get_roles():
         'roles': roles,
         'all_modules': ALL_MODULES
     }), 200
+

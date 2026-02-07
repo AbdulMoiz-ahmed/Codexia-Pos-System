@@ -260,25 +260,30 @@ export default function CustomerDashboard() {
                             Subscription
                         </Link>
 
-                        <Link
-                            to="/customer/dashboard/activity"
-                            className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${location.pathname.includes('/activity')
-                                ? 'border-primary-500 text-primary-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                }`}
-                        >
-                            Activity Logs
-                        </Link>
+                        {/* Admin-only tabs */}
+                        {(user?.role === 'admin' || !user?.role) && (
+                            <>
+                                <Link
+                                    to="/customer/dashboard/activity"
+                                    className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${location.pathname.includes('/activity')
+                                        ? 'border-primary-500 text-primary-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        }`}
+                                >
+                                    Activity Logs
+                                </Link>
 
-                        <Link
-                            to="/customer/dashboard/settings"
-                            className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${location.pathname.includes('/settings')
-                                ? 'border-primary-500 text-primary-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                }`}
-                        >
-                            ⚙️ Settings
-                        </Link>
+                                <Link
+                                    to="/customer/dashboard/settings"
+                                    className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${location.pathname.includes('/settings')
+                                        ? 'border-primary-500 text-primary-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        }`}
+                                >
+                                    ⚙️ Settings
+                                </Link>
+                            </>
+                        )}
                     </nav>
                 </div>
             </div>
