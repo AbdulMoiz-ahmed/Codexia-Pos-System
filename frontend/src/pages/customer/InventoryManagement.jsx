@@ -110,7 +110,7 @@ export default function InventoryManagement() {
         <div>
             {/* Stats Cards */}
             {stats && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 mb-4 sm:mb-6">
                     <StatCard title="Total Products" value={stats.total_products} color="blue" />
                     <StatCard title="Low Stock" value={stats.low_stock_count} color="yellow" />
                     <StatCard title="Out of Stock" value={stats.out_of_stock} color="red" />
@@ -119,10 +119,10 @@ export default function InventoryManagement() {
             )}
 
             {/* Tabs */}
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-2 sm:gap-4 mb-4 sm:mb-6 overflow-x-auto">
                 <button
                     onClick={() => setActiveTab('products')}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'products'
+                    className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'products'
                         ? 'bg-primary-600 text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-50'
                         }`}
@@ -131,7 +131,7 @@ export default function InventoryManagement() {
                 </button>
                 <button
                     onClick={() => setActiveTab('categories')}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'categories'
+                    className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'categories'
                         ? 'bg-primary-600 text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-50'
                         }`}
@@ -143,18 +143,18 @@ export default function InventoryManagement() {
             {activeTab === 'products' ? (
                 <>
                     {/* Header */}
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
                         <div>
-                            <h2 className="text-2xl font-bold text-gray-900">Products</h2>
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Products</h2>
                         </div>
-                        <button onClick={handleCreateProduct} className="btn-primary">
+                        <button onClick={handleCreateProduct} className="btn-primary whitespace-nowrap">
                             + Add Product
                         </button>
                     </div>
 
                     {/* Filters */}
-                    <div className="bg-white rounded-lg shadow p-4 mb-6">
-                        <div className="flex gap-4">
+                    <div className="bg-white rounded-lg shadow p-3 sm:p-4 mb-4 sm:mb-6">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                             <input
                                 type="text"
                                 placeholder="Search products by name or SKU..."
@@ -176,23 +176,23 @@ export default function InventoryManagement() {
                     </div>
 
                     {/* Products Table */}
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
-                        <table className="min-w-full divide-y divide-gray-200">
+                    <div className="bg-white rounded-lg shadow overflow-x-auto">
+                        <table className="w-full text-sm">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">SKU</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cost</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase hidden sm:table-cell">SKU</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase hidden lg:table-cell">Category</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase hidden sm:table-cell">Price</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Cost</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                                    <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="divide-y divide-gray-200">
                                 {filteredProducts.length === 0 ? (
                                     <tr>
-                                        <td colSpan="7" className="px-6 py-12">
+                                        <td colSpan="7" className="px-2 sm:px-6 py-12">
                                             <EmptyState
                                                 title="No products found"
                                                 description="Add your first product to get started"
@@ -207,26 +207,26 @@ export default function InventoryManagement() {
                                 ) : (
                                     filteredProducts.map(product => (
                                         <tr key={product._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4">
-                                                <div className="font-medium text-gray-900">{product.name}</div>
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4">
+                                                <div className="font-medium text-gray-900 text-sm">{product.name}</div>
                                                 {product.barcode && (
                                                     <div className="text-xs text-gray-400">{product.barcode}</div>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-500">{product.sku}</td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4 text-xs sm:text-sm text-gray-500 hidden sm:table-cell">{product.sku}</td>
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4 hidden lg:table-cell">
                                                 <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
                                                     {product.category || 'Uncategorized'}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4 text-xs sm:text-sm font-medium text-gray-900 hidden sm:table-cell">
                                                 PKR {product.price?.toLocaleString()}
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-500">
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4 text-xs sm:text-sm text-gray-500 hidden md:table-cell">
                                                 PKR {product.cost?.toLocaleString()}
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${product.stock <= 0
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4">
+                                                <span className={`px-2 py-1 text-xs font-semibold rounded-full inline-block ${product.stock <= 0
                                                     ? 'bg-red-100 text-red-800'
                                                     : product.stock <= (product.min_stock || 10)
                                                         ? 'bg-yellow-100 text-yellow-800'
@@ -235,26 +235,28 @@ export default function InventoryManagement() {
                                                     {product.stock}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-sm font-medium">
-                                                <div className="flex gap-2">
+                                            <td className="px-2 sm:px-4 lg:px-6 py-2 sm:py-4">
+                                                <div className="flex gap-1 sm:gap-2">
                                                     <button
                                                         onClick={() => handleAdjustStock(product)}
-                                                        className="text-blue-600 hover:text-blue-900"
+                                                        className="text-blue-600 hover:text-blue-900 px-1 py-1 text-xs"
                                                         title="Adjust Stock"
                                                     >
                                                         ±
                                                     </button>
                                                     <button
                                                         onClick={() => handleEditProduct(product)}
-                                                        className="text-primary-600 hover:text-primary-900"
+                                                        className="text-primary-600 hover:text-primary-900 px-1 py-1 text-xs"
+                                                        title="Edit"
                                                     >
-                                                        Edit
+                                                        ✏️
                                                     </button>
                                                     <button
                                                         onClick={() => handleDeleteProduct(product._id)}
-                                                        className="text-red-600 hover:text-red-900"
+                                                        className="text-red-600 hover:text-red-900 px-1 py-1 text-xs"
+                                                        title="Delete"
                                                     >
-                                                        Delete
+                                                        🗑️
                                                     </button>
                                                 </div>
                                             </td>
@@ -268,16 +270,16 @@ export default function InventoryManagement() {
             ) : (
                 <>
                     {/* Categories Tab */}
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold text-gray-900">Categories</h2>
-                        <button onClick={handleCreateCategory} className="btn-primary">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+                        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Categories</h2>
+                        <button onClick={handleCreateCategory} className="btn-primary whitespace-nowrap">
                             + Add Category
                         </button>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                         {categories.length === 0 ? (
-                            <div className="col-span-3 bg-white rounded-lg shadow p-12">
+                            <div className="col-span-1 sm:col-span-2 lg:col-span-3 bg-white rounded-lg shadow p-8 sm:p-12">
                                 <EmptyState
                                     title="No categories"
                                     description="Create categories to organize your products"
@@ -402,9 +404,9 @@ function StatCard({ title, value, color }) {
     }
 
     return (
-        <div className={`rounded-lg p-4 border ${colors[color]}`}>
-            <p className="text-sm font-medium opacity-75">{title}</p>
-            <p className="text-2xl font-bold">{value}</p>
+        <div className={`rounded-lg p-2 sm:p-3 lg:p-4 border ${colors[color]}`}>
+            <p className="text-xs sm:text-sm font-medium opacity-75 truncate">{title}</p>
+            <p className="text-sm sm:text-lg lg:text-2xl font-bold mt-1 break-words">{value}</p>
         </div>
     )
 }
@@ -498,13 +500,13 @@ function ProductModal({ product, categories, onClose, onSave }) {
     }
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto p-6">
-                <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-2xl font-bold text-gray-900">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+                <div className="flex justify-between items-center mb-4 sm:mb-6">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                         {product ? 'Edit Product' : 'Add New Product'}
                     </h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600 flex-shrink-0">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -514,15 +516,15 @@ function ProductModal({ product, categories, onClose, onSave }) {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Product Image */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
-                        <div className="flex items-start gap-4">
-                            <div className="relative">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Product Image</label>
+                        <div className="flex items-start gap-3 sm:gap-4 flex-col sm:flex-row">
+                            <div className="relative flex-shrink-0">
                                 {imagePreview ? (
                                     <div className="relative">
                                         <img
                                             src={imagePreview.startsWith('blob:') ? imagePreview : `http://localhost:5000${imagePreview}`}
                                             alt="Product preview"
-                                            className="w-32 h-32 object-cover rounded-lg border border-gray-200"
+                                            className="w-24 sm:w-32 h-24 sm:h-32 object-cover rounded-lg border border-gray-200"
                                         />
                                         <button
                                             type="button"
@@ -533,14 +535,14 @@ function ProductModal({ product, categories, onClose, onSave }) {
                                         </button>
                                     </div>
                                 ) : (
-                                    <div className="w-32 h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-                                        <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="w-24 sm:w-32 h-24 sm:h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                                        <svg className="w-8 sm:w-10 h-8 sm:h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
                                     </div>
                                 )}
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 min-w-0">
                                 <input
                                     type="file"
                                     accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
@@ -550,9 +552,9 @@ function ProductModal({ product, categories, onClose, onSave }) {
                                 />
                                 <label
                                     htmlFor="product-image-input"
-                                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+                                    className="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-xs sm:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                                 >
-                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-3 sm:w-4 h-3 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                     </svg>
                                     Choose Image
@@ -562,37 +564,37 @@ function ProductModal({ product, categories, onClose, onSave }) {
                         </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Product Name *</label>
                             <input
                                 type="text"
                                 required
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="input-field"
+                                className="input-field text-sm"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">SKU *</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">SKU *</label>
                             <input
                                 type="text"
                                 required
                                 value={formData.sku}
                                 onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                                className="input-field"
+                                className="input-field text-sm"
                                 disabled={!!product}
                             />
                         </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Category</label>
                             <select
                                 value={formData.category_id}
                                 onChange={(e) => handleCategoryChange(e.target.value)}
-                                className="input-field"
+                                className="input-field text-sm"
                             >
                                 <option value="">Uncategorized</option>
                                 {categories.map(cat => (
@@ -601,74 +603,74 @@ function ProductModal({ product, categories, onClose, onSave }) {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Barcode</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Barcode</label>
                             <input
                                 type="text"
                                 value={formData.barcode}
                                 onChange={(e) => setFormData({ ...formData, barcode: e.target.value })}
-                                className="input-field"
+                                className="input-field text-sm"
                             />
                         </div>
                     </div>
 
-                    <div className="grid md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Price *</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Price *</label>
                             <input
                                 type="number"
                                 required
                                 min="0"
                                 value={formData.price}
                                 onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
-                                className="input-field"
+                                className="input-field text-xs sm:text-sm"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Cost</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Cost</label>
                             <input
                                 type="number"
                                 min="0"
                                 value={formData.cost}
                                 onChange={(e) => setFormData({ ...formData, cost: parseFloat(e.target.value) || 0 })}
-                                className="input-field"
+                                className="input-field text-xs sm:text-sm"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Stock *</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Stock *</label>
                             <input
                                 type="number"
                                 required
                                 min="0"
                                 value={formData.stock}
                                 onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
-                                className="input-field"
+                                className="input-field text-xs sm:text-sm"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Min Stock</label>
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Min Stock</label>
                             <input
                                 type="number"
                                 min="0"
                                 value={formData.min_stock}
                                 onChange={(e) => setFormData({ ...formData, min_stock: parseInt(e.target.value) || 0 })}
-                                className="input-field"
+                                className="input-field text-xs sm:text-sm"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Description</label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="input-field"
+                            className="input-field text-sm"
                             rows="2"
                         />
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-4">
-                        <button type="button" onClick={onClose} className="btn-secondary">Cancel</button>
-                        <button type="submit" className="btn-primary" disabled={uploading}>
+                    <div className="flex justify-end gap-2 sm:gap-3 pt-3 sm:pt-4">
+                        <button type="button" onClick={onClose} className="btn-secondary text-xs sm:text-sm">Cancel</button>
+                        <button type="submit" className="btn-primary text-xs sm:text-sm" disabled={uploading}>
                             {uploading ? 'Uploading...' : 'Save Product'}
                         </button>
                     </div>

@@ -313,7 +313,7 @@ export default function POSSystem() {
                                             >
                                                 -
                                             </button>
-                                            <span className="w-8 text-center font-medium">{item.quantity}</span>
+                                            <span className="w-8 text-center text-gray-500 font-medium">{item.quantity}</span>
                                             <button
                                                 onClick={() => updateQuantity(item._id, item.quantity + 1)}
                                                 className="w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
@@ -337,7 +337,7 @@ export default function POSSystem() {
                                     <span>PKR {getSubtotal().toLocaleString()}</span>
                                 </div>
                                 <div className="flex justify-between text-xl font-bold">
-                                    <span>Total:</span>
+                                    <span className='text-gray-500'>Total:</span>
                                     <span className="text-primary-600">PKR {getSubtotal().toLocaleString()}</span>
                                 </div>
                             </div>
@@ -424,7 +424,7 @@ function CheckoutModal({
                                 <div className="bg-blue-50 rounded-lg p-3 text-sm">
                                     <div className="flex justify-between">
                                         <span className="text-blue-700">Credit Limit:</span>
-                                        <span className="font-medium">PKR {(selectedCustomer.credit_limit || 0).toLocaleString()}</span>
+                                        <span className="font-medium text-gray-500">PKR {(selectedCustomer.credit_limit || 0).toLocaleString()}</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-blue-700">Current Balance:</span>
@@ -447,7 +447,7 @@ function CheckoutModal({
                                                 payment_type: type,
                                                 amount_paid: type === 'cash' ? getTotal() : 0
                                             }))}
-                                            className={`py-3 px-4 rounded-lg border-2 font-medium capitalize transition-all ${checkoutData.payment_type === type
+                                            className={`py-3 px-4 rounded-lg border-2 text-gray-500 font-medium capitalize transition-all ${checkoutData.payment_type === type
                                                 ? type === 'credit'
                                                     ? 'border-orange-500 bg-orange-50 text-orange-700'
                                                     : 'border-green-500 bg-green-50 text-green-700'
@@ -462,7 +462,7 @@ function CheckoutModal({
 
                             {/* Payment Method (only for cash) */}
                             {checkoutData.payment_type === 'cash' && (
-                                <div>
+                                <div className='text-gray-500'>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
                                     <div className="grid grid-cols-3 gap-2">
                                         {['cash', 'card', 'transfer'].map(method => (
@@ -564,7 +564,7 @@ function CheckoutModal({
                         <div className="bg-gray-50 rounded-lg p-4">
                             <h4 className="font-bold text-gray-900 mb-4">Order Summary</h4>
 
-                            <div className="space-y-2 mb-4 max-h-40 overflow-y-auto">
+                            <div className="space-y-2 mb-4 max-h-40 overflow-y-auto text-gray-500">
                                 {cart.map(item => (
                                     <div key={item._id} className="flex justify-between text-sm">
                                         <span>{item.name} × {item.quantity}</span>
@@ -573,7 +573,7 @@ function CheckoutModal({
                                 ))}
                             </div>
 
-                            <div className="border-t pt-4 space-y-2">
+                            <div className="border-t pt-4 space-y-2 text-gray-500">
                                 <div className="flex justify-between text-gray-600">
                                     <span>Subtotal:</span>
                                     <span>PKR {getSubtotal().toLocaleString()}</span>
@@ -634,7 +634,7 @@ function ReceiptModal({ receipt, onClose }) {
     }
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 text-gray-500">
             <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
                 <div className="p-6" id="receipt-content">
                     <div className="text-center mb-6">
