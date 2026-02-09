@@ -1,0 +1,197 @@
+Inventory & Finance Management System (IFMS)
+1. Project Overview
+The Inventory & Finance Management System (IFMS) is a role-based business management solution designed to handle sales, purchases, inventory tracking, and complete financial accounting. The system supports credit-based sales, customer debt tracking, vendor management, and automated notifications.
+The system will be modular, secure, and scalable, suitable for small-to-medium businesses.
+
+2. Core Objectives
+Manage inventory (stock in / stock out)
+Enable controlled sales and purchases based on user roles
+Maintain accurate financial ledgers (credit, debit, assets, expenses)
+Support credit sales and customer debt tracking
+Generate real-time reports (inventory, profit & loss, ledgers)
+Send SMS notifications to customers for outstanding dues
+
+3. User Roles & Permissions
+3.1 Role-Based Access Control (RBAC)
+The system will use permission-based access, not hard-coded roles.
+Default Roles:
+Admin (Full Control)
+Inventory Manager
+Sales User
+Purchase User
+Finance User
+Custom User (Admin-defined permissions)
+Permission Examples:
+View Inventory
+Add / Update Inventory
+Sell Items
+Purchase Items
+View Financial Reports
+Manage Ledgers
+Manage Users & Roles
+Configure SMS & System Settings
+🔐 Admin Override: Admin can assign all permissions to any user if required.
+
+4. Inventory Management Module
+Features:
+Item creation (SKU, name, category, unit, cost price, sale price)
+Stock tracking (real-time quantity)
+Low-stock alerts
+Batch / serial support (optional)
+Inventory Actions:
+Stock In (via Purchase)
+Stock Out (via Sale)
+Manual adjustments (Admin only)
+Inventory Reports:
+Total Inventory Summary
+Stock Movement Report
+Low Stock Report
+Item-wise Profit Report
+
+5. Sales Module
+Features:
+Cash Sales
+Credit Sales (Pay Later)
+Customer-wise sales history
+Automatic stock deduction
+Credit Sales Flow:
+User creates sale
+Selects customer
+Payment type = Credit
+System creates Customer Ledger (Debit)
+Due amount stored
+Permissions:
+Some users can sell only (no purchase access)
+Admin can allow selling + purchasing
+
+6. Purchase Module
+Features:
+Vendor-based purchasing
+Purchase on cash or credit
+Automatic stock increase
+Vendor ledger creation
+Permissions:
+Only authorized users can purchase
+Admin has full access
+
+7. Finance & Ledger Module (Core Accounting)
+Ledger Types:
+7.1 Customer Ledger
+Debit: Sales on credit
+Credit: Customer payments
+Balance: Amount receivable
+7.2 Vendor Ledger
+Credit: Purchases on credit
+Debit: Payments to vendor
+Balance: Amount payable
+7.3 Bank Ledger
+Bank deposits
+Withdrawals
+Transfers
+7.4 Cash Ledger
+Cash sales
+Cash expenses
+7.5 Expense Ledger
+Rent
+Salaries
+Utilities
+Miscellaneous expenses
+7.6 Asset Ledger
+Equipment
+Machinery
+Furniture
+
+8. Accounting Rules (Double Entry)
+Every transaction will follow Double Entry Accounting:
+Example – Credit Sale:
+Customer Ledger → Debit
+Sales Ledger → Credit
+Example – Purchase:
+Inventory → Debit
+Vendor Ledger → Credit
+
+9. Financial Reports
+Reports Included:
+Profit & Loss Statement
+Balance Sheet
+Trial Balance
+Customer Due Report
+Vendor Payable Report
+Expense Report
+Cash Flow Report
+Reports can be filtered by:
+Date range
+Customer / Vendor
+Branch (if applicable)
+
+10. Customer Credit & SMS Notification Module
+Credit Management:
+Customers can purchase and pay later
+Due date tracking
+Aging report (0–30, 31–60, 60+ days)
+SMS Notifications:
+Invoice created
+Payment received
+Due reminder
+Sample SMS:
+Dear Customer, your outstanding balance is PKR 5,000. Please clear your dues. Thank you.
+
+11. User & Security Management
+Secure login (JWT / Session-based)
+Password hashing
+Role & permission enforcement (Frontend + Backend)
+Activity logs (who sold, who edited, who deleted)
+
+12. System Configuration (Admin Only)
+SMS API configuration
+Tax settings
+Currency settings
+Permission management
+Backup & restore
+
+13. Optional Future Enhancements
+Multi-branch support
+Barcode scanner integration
+Mobile app
+GST / VAT automation
+WhatsApp notifications
+
+
+
+14. E-commerce Storefront Module (New)
+This module adds a public-facing website where customers can browse the inventory and place orders.
+14.1 Storefront Features (Customer Side)
+Product Catalog: Responsive web view showing product name, image, description, and price.
+Availability Status: Real-time "In Stock" or "Out of Stock" labels (synced with Module 4).
+Shopping Cart: Add/Remove items and calculate totals.
+Guest Checkout: Simple form for Customer Name, Phone Number, and Shipping Address.
+Payment Method: Strictly Cash on Delivery (COD) (as requested).
+Order Confirmation: Unique Order ID generated for the customer.
+14.2 Admin Control & Web Management
+Website Visibility Toggle: A specific "Show on Website" checkbox in the Item Creation/Editing screen. Only items checked by the Admin will appear on the storefront.
+Web Order Management: A dedicated "Online Orders" queue where staff can approve, ship, or cancel orders.
+14.3 Inventory & Finance Integration
+Automatic Reservation: When a web order is placed, the system can "soft-reserve" stock to prevent overselling.
+Transaction Flow:
+On Order Placement: Order status = "Pending". No ledger entry yet.
+On Delivery/Completion: * Inventory → Debit (Stock Out)
+Cash/Customer Ledger → Credit (Sale)
+(This maintains the Double Entry Accounting rules in Section 8).
+
+
+
+15. Deliverables
+Complete Web Application
+Admin Panel
+Role & Permission System
+Inventory & Finance Modules
+Reports Dashboard
+Documentation & Training
+Public Website: For customers to browse and order.
+
+16. Conclusion
+This system provides full control over inventory, sales, purchases, and finance, with strong accounting logic and flexible permissions. It is designed to reduce fraud, improve transparency, and enable scalable business operations.
+
+Prepared by: Abdul Rafay
+Title: Software Developer
+
